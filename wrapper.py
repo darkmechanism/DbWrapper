@@ -51,10 +51,3 @@ class DbWrapper:
         DbOverseer.commit()
         DbOverseer.close()
         self.__logfile.plog(f"{self.__filename}: Deleted table {tablename}.")
-
-    
-Test = DbWrapper("main.db", "logs.txt")
-
-Test.ShapeTable(["ip", "port"], "netinfo")
-Test.AppendLine(["192.168.1.1", "80"], "netinfo")
-print(Test.GetTable("netinfo"))
