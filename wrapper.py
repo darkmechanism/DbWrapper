@@ -44,6 +44,17 @@ class DbWrapper:
         self.__logfile.plog(f"{self.__filename}: Requested table {tablename}.")
         return LineInfo
 
+    def UpdateVal(self, finderstat, setterstat, finder, setter, tablename):
+        DbOverseer = connect(self.__filename)
+        DbCursor = DbOverseer.cursor()
+        sql = f''' UPDATE {tablename}
+                  SET {setterstat} = ?
+                  WHERE {finderstat} = ?'''
+        DbCursor.execute(sql, (setter, finder))
+        self.__logfile.plog(f"{self.__filename}: Updated {setterstat} to be {setter} in line where {finderstat} is {finder} in table {tablename}.")
+        DbOverseer.commit()
+        DbOverseer.close()
+
     def DeleteTable(self, tablename):
         DbOverseer = connect(self.__filename)
         DbCursor = DbOverseer.cursor()
